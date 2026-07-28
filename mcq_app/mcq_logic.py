@@ -6,6 +6,7 @@ try:
     nltk.data.find("tokenizers/punkt")
 except LookupError:
     nltk.download("punkt")
+    nltk.download("punkt_tab")
 
 
 def generate_mcqs_from_text(text, num_questions=5):

@@ -34,22 +34,34 @@ def register(request):
 
 @login_required(login_url="login")
 def upload_notes(request):
-
     if request.method == "POST":
         form = UploadNotesForm(request.POST, request.FILES)
 
         if form.is_valid():
-            obj = form.save()
+            try:
+                obj = form.save()
 
-            text = extract_text_from_pdf(obj.file.path)
+                print("STEP 1: File Saved")
 
-            text = text[:2000]
+                text = extract_text_from_pdf(obj.file.path)
 
-            mcqs = generate_mcqs_from_text(text)
+                print("STEP 2: PDF Text Extracted")
 
-            request.session["mcqs"] = mcqs
+                text = text[:2000]
 
-            return redirect("quiz")
+                mcqs = generate_mcqs_from_text(text)
+
+                print("STEP 3: MCQs Generated")
+
+                request.session["mcqs"] = mcqs
+
+                return redirect("quiz")
+
+            except Exception as e:
+                print("========== ERROR ==========")
+                traceback.print_exc()
+                print("===========================")
+                raise
 
     else:
         form = UploadNotesForm()
