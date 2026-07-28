@@ -1,71 +1,63 @@
 import os
+from google import genai
 
-os.environ["TRANSFORMERS_NO_TF"] = "1"
-os.environ["USE_TF"] = "0"
-
-from transformers import pipeline
-
-_generator = None
-
-
-def get_generator():
-    global _generator
-    if _generator is None:
-        _generator = pipeline(
-            "text2text-generation",
-            model="google/flan-t5-small"
-        )
-    return _generator
+# Gemini Client
+client = genai.Client(
+    api_key=os.getenv("GEMINI_API_KEY")
+)
 
 
 def generate_mcqs(text):
-    generator = get_generator()
+    """
+    Generate MCQs using Gemini 2.5 Flash
+    """
 
     prompt = f"""
-TASK: Generate Multiple Choice Questions ONLY.
+You are an AI MCQ Generator.
 
-RULES:
-- DO NOT explain theory
-- DO NOT summarize
-- DO NOT repeat text
-- OUTPUT ONLY MCQs
+Generate exactly 5 Multiple Choice Questions from the given text.
 
-FORMAT (STRICT):
+Rules:
+- Return only MCQs.
+- Each question must have 4 options.
+- Mention the correct answer.
+- Keep questions concise.
 
-Q1. Question?
+Format:
+
+Q1. Question
+
 A) Option
+
 B) Option
+
 C) Option
+
 D) Option
+
 Answer: A
-
-Q2. Question?
-A) Option
-B) Option
-C) Option
-D) Option
-Answer: B
 
 TEXT:
 {text}
 """
 
-    result = generator(
-        prompt,
-        max_length=600,
-        do_sample=False
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt,
     )
 
-    return result[0]["generated_text"]
-from transformers import T5ForConditionalGeneration, T5Tokenizer
+    return response.text
 
-MODEL_NAME = "google/flan-t5-small"
 
-tokenizer = T5Tokenizer.from_pretrained(MODEL_NAME)
-model = T5ForConditionalGeneration.from_pretrained(MODEL_NAME)
+def run_flan_t5(prompt: str):
+    """
+    Compatibility function.
+    Existing views.py calls this function.
+    """
 
-def run_flan_t5(prompt: str) -> str:
-    input_ids = tokenizer(prompt, return_tensors="pt").input_ids
-    outputs = model.generate(input_ids, max_new_tokens=128)
-    return tokenizer.decode(outputs[0], skip_special_tokens=True)
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt,
+    )
 
+    return response.text

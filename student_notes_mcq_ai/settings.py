@@ -4,6 +4,9 @@ Django settings for student_notes_mcq_ai project.
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # --------------------------------------------------
 # Base Directory
