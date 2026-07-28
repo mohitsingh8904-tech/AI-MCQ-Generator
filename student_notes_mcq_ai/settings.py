@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-@kb#nh!u*g^gc#-uhtvydg0&#j1754=n0)zsif1t54(@6vz7uj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    ".onrender.com",
+    "localhost",
+    "127.0.0.1"
+]
 
 
 # Application definition
@@ -43,6 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -133,3 +138,4 @@ LOGOUT_REDIRECT_URL = "login"
 TIME_ZONE = "Asia/Kolkata"
 USE_TZ = True
 
+STATIC_ROOT = BASE_DIR / "staticfiles"
