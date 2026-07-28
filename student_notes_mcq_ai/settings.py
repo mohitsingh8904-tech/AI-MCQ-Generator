@@ -5,12 +5,16 @@ Django settings for student_notes_mcq_ai project.
 from pathlib import Path
 import os
 
+# --------------------------------------------------
+# Base Directory
+# --------------------------------------------------
 
-# Build paths
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+# --------------------------------------------------
 # Security
+# --------------------------------------------------
+
 SECRET_KEY = os.environ.get(
     "SECRET_KEY",
     "django-insecure-development-key"
@@ -18,15 +22,19 @@ SECRET_KEY = os.environ.get(
 
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-
 ALLOWED_HOSTS = [
-    ".onrender.com",
-    "localhost",
     "127.0.0.1",
+    "localhost",
+    ".onrender.com",
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.onrender.com",
+]
 
-# Application definition
+# --------------------------------------------------
+# Installed Apps
+# --------------------------------------------------
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -36,16 +44,19 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    # Your apps
+    # Local Apps
     "mcq_app",
     "blog",
 ]
 
+# --------------------------------------------------
+# Middleware
+# --------------------------------------------------
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
 
-    # Static files for Render
+    # WhiteNoise
     "whitenoise.middleware.WhiteNoiseMiddleware",
 
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -56,20 +67,19 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-
 ROOT_URLCONF = "student_notes_mcq_ai.urls"
 
+# --------------------------------------------------
+# Templates
+# --------------------------------------------------
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-
         "DIRS": [
-            BASE_DIR / "templates"
+            BASE_DIR / "templates",
         ],
-
         "APP_DIRS": True,
-
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
@@ -81,12 +91,11 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = "student_notes_mcq_ai.wsgi.application"
 
-
+# --------------------------------------------------
 # Database
-# SQLite (works for first Render deployment)
+# --------------------------------------------------
 
 DATABASES = {
     "default": {
@@ -95,9 +104,9 @@ DATABASES = {
     }
 }
 
-
-
-# Password validation
+# --------------------------------------------------
+# Password Validation
+# --------------------------------------------------
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -118,9 +127,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-
+# --------------------------------------------------
 # Internationalization
+# --------------------------------------------------
 
 LANGUAGE_CODE = "en-us"
 
@@ -130,39 +139,42 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-
-# Static files
+# --------------------------------------------------
+# Static Files
+# --------------------------------------------------
 
 STATIC_URL = "/static/"
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-
-# WhiteNoise compression
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 STATICFILES_STORAGE = (
     "whitenoise.storage.CompressedManifestStaticFilesStorage"
 )
 
-
-
-# Media files
+# --------------------------------------------------
+# Media Files
+# --------------------------------------------------
 
 MEDIA_URL = "/media/"
 
 MEDIA_ROOT = BASE_DIR / "media"
 
-
-
-# Authentication redirects
+# --------------------------------------------------
+# Authentication
+# --------------------------------------------------
 
 LOGIN_REDIRECT_URL = "home"
 
 LOGOUT_REDIRECT_URL = "login"
 
+LOGIN_URL = "login"
 
-
-# Default primary key
+# --------------------------------------------------
+# Default Primary Key
+# --------------------------------------------------
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
