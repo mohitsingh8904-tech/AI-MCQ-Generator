@@ -8,7 +8,6 @@ from .forms import UploadNotesForm
 from .utils import extract_text_from_pdf
 from .mcq_logic import generate_mcqs_from_text
 from blog.models import BlogPost
-from .pdf_utils import render_to_pdf
 
 
 @login_required(login_url="login")
@@ -134,30 +133,3 @@ def my_tests(request):
     return render(request, "my_tests.html", {"history": history})
 
 
-@login_required(login_url="login")
-def download_result_pdf(request, result_id):
-
-    mcqs = request.session.get("mcqs", [])
-
-    if not mcqs:
-        return redirect("my_tests")
-
-    try:
-        qr = QuizResult.objects.get(id=result_id, user=request.user)
-
-    except QuizResult.DoesNotExist:
-        return redirect("my_tests")
-
-    context = {
-        "user": request.user,
-        "score": qr.score,
-        "total": qr.total,
-        "date": qr.created_at,
-        "subject": qr.subject,
-    }
-
-    return render_to_pdf(
-        "result_pdf.html",
-        context,
-        filename=f"quiz_{qr.id}.pdf",
-    )

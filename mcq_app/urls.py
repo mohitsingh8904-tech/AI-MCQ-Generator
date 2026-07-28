@@ -22,11 +22,6 @@ urlpatterns = [
 
     path("my-tests/", views.my_tests, name="my_tests"),
 
-    path(
-        "result/<int:result_id>/pdf/",
-        views.download_result_pdf,
-        name="result_pdf",
-    ),
 
     path("about/", views.about_view, name="about"),
 
