@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Result{% endblock %}
+{% block header_title %}Test Result{% endblock %}
+
+{% block page_css %}
+.result-card{display:grid;gap:1rem;}
+.score-line span{color:#22c55e;font-weight:650;}
+.result-list{display:grid;gap:0.9rem;margin-top:0.6rem;}
+.result-item{
+    padding:0.7rem 0.5rem;
+    border-radius:10px;
+    background:rgba(15,23,42,.9);
+    border:1px solid rgba(55,65,81,.7);
+}
+.user-answer{color:#22c3ff;}
+.correct-answer{color:#22c55e;}
+{% endblock %}
+
+{% block content %}
+<div class="card result-card">
+    <h2 class="card-header">Your Performance</h2>
+
+    <p class="score-line">Score: <span>{{ score }}</span> / {{ total }}</p>
+
+    <div class="result-list">
+        {% for r in results %}
+            <div class="result-item">
+                <p class="question"><strong>{{ forloop.counter }}. {{ r.question }}</strong></p>
+                <p>Your Answer: <span class="user-answer">{{ r.user_answer }}</span></p>
+                <p>Correct Answer: <span class="correct-answer">{{ r.correct_answer }}</span></p>
+
+                {% comment %} {% if r.explanation %}
+                    <p style="margin-top:0.35rem;font-size:0.9rem;">
+                        <strong>Explanation:</strong> {{ r.explanation }}
+                    </p>
+                {% endif %} {% endcomment %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'upload' %}" class="btn">Try Another Test</a>
+</div>
+{% endblock %}

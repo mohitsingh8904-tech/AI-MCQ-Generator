@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload Notes{% endblock %}
+{% block header_title %}Upload Notes{% endblock %}
+
+{% block page_css %}
+.upload-card{max-width:520px;width:100%;}
+.upload-form{margin-top:1.1rem;display:grid;gap:0.9rem;}
+{% endblock %}
+
+{% block content %}
+<div class="card upload-card">
+    <h2 class="card-header">Upload Notes</h2>
+    <p class="text-muted">
+        Upload PDF or text files. The system will extract concepts and generate MCQs.
+    </p>
+
+    <form method="post" enctype="multipart/form-data" class="upload-form">
+        {% csrf_token %}
+        {{ form.file }}
+        <button type="submit">Upload Notes</button>
+    </form>
+</div>
+{% endblock %}

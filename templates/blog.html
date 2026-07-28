@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog · MCQ Guard AI{% endblock %}
+{% block header_title %}Blog & Updates{% endblock %}
+
+{% block page_css %}
+.blog-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:1.4rem;
+}
+.blog-card{
+    display:grid;
+    gap:0.6rem;
+}
+.blog-meta{
+    font-size:0.8rem;
+    color:#9ca3af;
+}
+.blog-tag{
+    display:inline-block;
+    padding:0.15rem 0.7rem;
+    border-radius:999px;
+    background:rgba(15,23,42,.9);
+    border:1px solid rgba(148,163,184,.4);
+    font-size:0.78rem;
+    margin-right:0.35rem;
+}
+.blog-title{
+    font-size:1.05rem;
+    font-weight:600;
+}
+.blog-excerpt{
+    font-size:0.9rem;
+    color:#cbd5f5;
+}
+@media(max-width:900px){
+    .blog-grid{grid-template-columns:1fr;}
+}
+{% endblock %}
+
+{% block content %}
+<div class="blog-grid">
+    {% for post in posts %}
+        <article class="card blog-card">
+            <div class="blog-meta">
+                {{ post.created_at|date:"d M Y" }}
+                {% if post.tag %} · {{ post.tag }}{% endif %}
+            </div>
+
+            <h2 class="blog-title">{{ post.title }}</h2>
+
+            <p class="blog-excerpt">
+                {{ post.summary }}
+            </p>
+
+            {% if post.tag %}
+                <div>
+                    <span class="blog-tag">{{ post.tag }}</span>
+                </div>
+            {% endif %}
+        </article>
+    {% empty %}
+        <p class="text-muted">
+            No blog posts yet. Add some posts from the admin panel.
+        </p>
+    {% endfor %}
+</div>
+{% endblock %}

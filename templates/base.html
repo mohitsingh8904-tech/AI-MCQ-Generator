@@ -1,0 +1,204 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}AI MCQ Generator{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        :root{
+            --bg-main:#020617;
+            --bg-elevated:#02081c;
+            --accent:#22c3ff;
+            --text-primary:#f9fafb;
+            --text-muted:#9ca3af;
+            --border-subtle:#111827;
+            --radius-lg:18px;
+            --shadow-soft:0 24px 60px rgba(15,23,42,.8);
+        }
+
+        *{box-sizing:border-box;margin:0;padding:0;}
+
+        body{
+            font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+            background:radial-gradient(circle at top left,#0b1120 0,#020617 45%,#000 100%);
+            color:var(--text-primary);
+        }
+
+        .topbar{
+            position:sticky;
+            top:0;
+            z-index:20;
+            background:#020617;
+            border-bottom:1px solid var(--border-subtle);
+            box-shadow:0 10px 25px rgba(15,23,42,.8);
+        }
+
+        .topbar-inner{
+            max-width:1200px;
+            margin:0 auto;
+            padding:0.75rem 1.75rem;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:1.5rem;
+        }
+
+        .logo-wrap{
+            display:flex;
+            align-items:center;
+            gap:0.6rem;
+            font-weight:700;
+        }
+
+        .logo-icon{font-size:1.4rem;}
+        .logo-text{color:var(--accent);}
+
+        .topnav{
+            display:flex;
+            gap:0.7rem;
+            flex-wrap:wrap;
+        }
+
+        .topnav a{
+            padding:0.45rem 0.9rem;
+            border-radius:999px;
+            text-decoration:none;
+            color:var(--text-muted);
+            font-size:0.9rem;
+            border:1px solid transparent;
+            transition:background .18s,color .18s,border-color .18s;
+        }
+
+        .topnav a:hover,
+        .topnav a:focus{
+            color:var(--accent);
+            border-color:rgba(34,197,235,.5);
+            background:linear-gradient(135deg,rgba(34,211,238,.08),rgba(37,99,235,.18));
+        }
+
+        .page-shell{
+            max-width:1200px;
+            margin:0 auto;
+            padding:1.5rem 1.75rem 2rem;
+            display:flex;
+            flex-direction:column;
+            gap:1.4rem;
+        }
+
+        .page-header-title{
+            font-size:1.6rem;
+            font-weight:650;
+        }
+
+        .card{
+            background:radial-gradient(circle at top left,#020617 0,#02081c 60%,#020617 100%);
+            border-radius:var(--radius-lg);
+            border:1px solid rgba(148,163,184,.08);
+            box-shadow:var(--shadow-soft);
+            padding:1.4rem 1.6rem;
+        }
+
+        .card-header{
+            font-size:1rem;
+            font-weight:600;
+            margin-bottom:0.8rem;
+        }
+
+        .text-muted{color:var(--text-muted);}
+
+        textarea,input[type="file"],input[type="text"],input[type="password"]{
+            width:100%;
+            border-radius:12px;
+            border:1px solid rgba(148,163,184,.35);
+            background:rgba(15,23,42,.9);
+            color:var(--text-primary);
+            padding:0.75rem 0.9rem;
+            font-size:0.95rem;
+        }
+
+        .btn,button{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            padding:0.65rem 1.5rem;
+            border-radius:999px;
+            border:none;
+            background:linear-gradient(135deg,#22c3ff,#3b82f6);
+            color:#020617;
+            font-weight:600;
+            cursor:pointer;
+            text-decoration:none;
+            transition:transform .08s,box-shadow .12s;
+        }
+
+        .btn:hover,button:hover{
+            transform:translateY(-1px);
+            box-shadow:0 16px 35px rgba(56,189,248,.45);
+        }
+
+        .page-footer{
+            margin-top:1rem;
+            font-size:0.8rem;
+            color:var(--text-muted);
+            text-align:center;
+        }
+
+        @media (max-width:768px){
+            .topbar-inner{
+                flex-direction:column;
+                align-items:flex-start;
+            }
+        }
+
+        {% block page_css %}{% endblock %}
+    </style>
+</head>
+<body>
+
+<header class="topbar">
+    <div class="topbar-inner">
+        <div class="logo-wrap">
+            <span class="logo-icon">📘</span>
+            <span class="logo-text">AI MCQ Generator</span>
+        </div>
+        <nav class="topnav">
+            <a href="{% url 'home' %}">Dashboard</a>
+            <a href="{% url 'blog' %}">Blog</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'my_tests' %}">My Tests</a>
+
+            {% if user.is_authenticated %}
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit"
+                            style="background:none;border:none;color:#e5e7eb;cursor:pointer;">
+                        Logout
+                    </button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+
+<div class="page-shell">
+    <div class="page-inner">
+        <h1 class="page-header-title">
+            {% block header_title %}AI MCQ Generator Dashboard{% endblock %}
+        </h1>
+
+        {% block content %}{% endblock %}
+
+        <div class="page-footer">
+            © 2025 AI MCQ Generator · B.Tech CSE Project
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+

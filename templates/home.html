@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard · MCQ Guard AI{% endblock %}
+{% block header_title %}MCQ Guard AI Dashboard{% endblock %}
+
+{% block page_css %}
+.home-grid{
+    display:grid;
+    grid-template-columns:2fr 1.4fr;
+    gap:1.4rem;
+}
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:0.9rem;
+    margin-top:0.8rem;
+}
+.stat-block{
+    padding:0.7rem 0.9rem;
+    border-radius:14px;
+    background:rgba(15,23,42,.95);
+    border:1px solid rgba(148,163,184,.22);
+}
+.stat-block .label{
+    font-size:0.8rem;
+    color:#9ca3af;
+}
+.stat-block .value{
+    display:block;
+    margin-top:0.25rem;
+    font-weight:600;
+    font-size:1.1rem;
+}
+@media(max-width:900px){
+    .home-grid{grid-template-columns:1fr;}
+}
+{% endblock %}
+
+{% block content %}
+<div class="home-grid">
+    <section class="card">
+        <h2 class="card-header">Notes Analyzer</h2>
+        <p class="text-muted">
+            Paste or upload notes and convert them into MCQs for smart revision.
+        </p>
+        <a href="{% url 'upload' %}" class="btn" style="margin-top:1rem;">Generator Quiz</a>
+    </section>
+
+    {% comment %} <section class="card">
+        <h2 class="card-header">System Overview</h2>
+        <div class="stats-grid">
+            <div class="stat-block">
+                <span class="label">Total Tests</span>
+                <span class="value">{{ total_tests|default:"128" }}</span>
+            </div>
+            <div class="stat-block">
+                <span class="label">Questions Generated</span>
+                <span class="value">{{ total_mcqs|default:"842" }}</span>
+            </div>
+            <div class="stat-block">
+                <span class="label">Avg. Score</span>
+                <span class="value">{{ avg_score|default:"72%" }}</span>
+            </div>
+            <div class="stat-block">
+                <span class="label">Model</span>
+                <span class="value">v1.0</span>
+            </div>
+        </div>
+    </section> {% endcomment %}
+</div>
+{% endblock %}

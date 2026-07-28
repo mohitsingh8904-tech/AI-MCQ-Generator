@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}About Project{% endblock %}
+{% block header_title %}About Project{% endblock %}
+
+{% block page_css %}
+.about-grid{display:grid;gap:0.9rem;}
+.tech-list{display:grid;gap:0.3rem;margin-top:0.4rem;}
+.tech-pill{
+    display:inline-block;
+    padding:0.25rem 0.8rem;
+    border-radius:999px;
+    background:rgba(15,23,42,.9);
+    border:1px solid rgba(148,163,184,.4);
+    font-size:0.85rem;
+}
+{% endblock %}
+
+{% block content %}
+<div class="card about-grid">
+    <h2 class="card-header">AI MCQ Generator</h2>
+    <p class="text-muted">
+        This system converts student notes into multiple-choice questions using NLP
+        and transformer-based free LLM models so students can revise faster.
+    </p>
+
+    <div>
+        <p class="text-muted" style="margin-bottom:0.35rem;">Tech stack:</p>
+        <div class="tech-list">
+            <span class="tech-pill">Python · Django</span>
+            <span class="tech-pill">NLP</span>
+            <span class="tech-pill">Transformer LLM</span>
+            <span class="tech-pill">Kaggle Dataset</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

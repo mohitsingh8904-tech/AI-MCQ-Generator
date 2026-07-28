@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}MCQ Test{% endblock %}
+{% block header_title %}MCQ Test{% endblock %}
+
+{% block page_css %}
+.quiz-form{display:grid;gap:1.2rem;}
+.quiz-question{padding:0.9rem 0;border-bottom:1px solid rgba(31,41,55,.8);}
+.question-text{margin-bottom:0.6rem;font-weight:500;}
+.options{display:grid;gap:0.35rem;}
+.option{display:flex;align-items:center;gap:0.5rem;font-size:0.95rem;}
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="card-header">Answer the questions</h2>
+
+    <form method="post" class="quiz-form">
+        {% csrf_token %}
+        {% for mcq in mcqs %}
+            <div class="quiz-question">
+                <p class="question-text">{{ forloop.counter }}. {{ mcq.question }}</p>
+                <div class="options">
+                    {% for opt in mcq.options %}
+                        <label class="option">
+                            <input type="radio"
+                                   name="q{{ forloop.parentloop.counter }}"
+                                   value="{{ opt }}"
+                                   required>
+                            <span>{{ opt }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        {% empty %}
+            <p>No questions loaded.</p>
+        {% endfor %}
+        {% if mcqs %}
+            <button type="submit">Submit Test</button>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,9 @@
+Django>=5.2
+transformers>=4.45.0
+torch>=2.4.0
+sentencepiece>=0.2.0
+nltk>=3.9
+scikit-learn>=1.5.0
+pdfplumber>=0.11.4
+xhtml2pdf>=0.2.16
+Pillow>=10.4.0

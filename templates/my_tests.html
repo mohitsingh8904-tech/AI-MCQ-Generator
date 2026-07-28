@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}My Tests{% endblock %}
+{% block header_title %}My Tests{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="card-header">Quiz History</h2>
+    {% if history %}
+        <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+            <tr style="border-bottom:1px solid #374151;">
+                <th style="text-align:left;padding:0.4rem;">Date</th>
+                <th style="text-align:left;padding:0.4rem;">Score</th>
+                {% comment %} <th style="text-align:left;padding:0.4rem;">Subject</th> {% endcomment %}
+                {% comment %} <th style="text-align:left;padding:0.4rem;">PDF</th>   <!-- new column --> {% endcomment %}
+            </tr>
+            {% for h in history %}
+            <tr style="border-bottom:1px solid #111827;">
+                <td style="padding:0.4rem;">{{ h.created_at|date:"d M Y H:i" }}</td>
+                <td style="padding:0.4rem;">{{ h.score }}/{{ h.total }}</td>
+                {% comment %} <td style="padding:0.4rem;">{{ h.subject|default:"-" }}</td> {% endcomment %}
+
+                <td style="padding:0.4rem;">
+                    {% comment %} <a href="{% url 'result_pdf' h.id %}">Download PDF</a> {% endcomment %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p class="text-muted">No tests taken yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
