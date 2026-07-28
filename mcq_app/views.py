@@ -8,7 +8,7 @@ from .forms import UploadNotesForm
 from .utils import extract_text_from_pdf
 from .mcq_logic import generate_mcqs_from_text
 from blog.models import BlogPost
-
+import traceback
 
 @login_required(login_url="login")
 def home(request):
