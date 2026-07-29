@@ -66,7 +66,7 @@ student_notes_mcq_ai/
 Clone the repository
 
 ```bash
-git clone https://github.com/vineetvyas7/student_notes_mcq_ai.git
+git clone https://github.com/mohitsingh8904-tech/AI-MCQ-Generator.git
 ```
 
 Go to the project directory
@@ -113,10 +113,9 @@ http://127.0.0.1:8000/
 ---
 
 
-Vineet Vyas
+Mohit singh chandawat
 
 - B.Tech Computer Science Engineering
 - Sangam University
-- Email: vyasvineet7@gmail.com
-- GitHub: https://github.com/vineetvyas7
-- LinkedIn: https://www.linkedin.com/in/vineet-vyas-564687367
+- Email: ms8904794@gmail.com
+- GitHub: https://github.com/mohitsingh8904-tech
